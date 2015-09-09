@@ -2,7 +2,9 @@ module RailsSettings
   class Settings < ActiveRecord::Base
     self.table_name = table_name_prefix + 'settings'
 
-    attr_accessible :var if defined? ProtectedAttributes
+    unless Rails::VERSION::MAJOR > 3 && !defined? ProtectedAttributes
+      attr_accessible :var
+    end
 
     class SettingNotFound < RuntimeError; end
 
