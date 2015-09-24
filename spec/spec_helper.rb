@@ -60,7 +60,10 @@ RSpec.configure do |config|
     end
 
     class User < ActiveRecord::Base
-      has_settings gender: :string
+      has_settings gender: :string,
+                   level: :integer,
+                   locked: :boolean,
+                   last_logined_at: :object
     end
 
     ActiveRecord::Base.connection.execute('delete from settings')

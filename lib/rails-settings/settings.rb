@@ -82,6 +82,11 @@ module RailsSettings
         var_name = var_name.to_s
 
         record = object(var_name) || thing_scoped.new(var: var_name)
+
+        if record.thing && !record.thing.rails_settings_mapping.has_key?(var_name.to_sym)
+          raise SettingNotFound, "Setting variable \"#{var_name}\" not declared in #{record.thing.class} model."
+        end
+
         record.value = value
         record.save!
 

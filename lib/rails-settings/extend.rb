@@ -78,7 +78,7 @@ module RailsSettings
                                  when :boolean
                                    ActiveRecord::Type::Boolean.new.type_cast_from_user(v)
                                  when :object
-                                   v.is_a?(Hash) || v.is_a?(Array) ? v : nil
+                                   v
                                end
           end
         end
