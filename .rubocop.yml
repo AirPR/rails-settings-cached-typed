@@ -1,6 +1,6 @@
 AllCops:
   Exclude:
-    - 'rails-settings-cached.gemspec'
+    - 'rails-settings-cached-typed.gemspec'
     - 'vendor/**/*'
     - 'lib/generators/settings/templates/*'
 

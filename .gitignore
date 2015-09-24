@@ -3,3 +3,6 @@ log
 .idea
 .bundle/
 vendor/
+
+.ruby-version
+.ruby-gemset
