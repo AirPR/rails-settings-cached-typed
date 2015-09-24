@@ -1,5 +1,17 @@
 # For Rails 4.1 +
 
+## 0.4.5
+
+* Cache db values that does not exist within rails cache.
+
+## 0.4.4
+
+* Add cached to model scoped settings.
+
+## 0.4.3
+
+* Fix Rails 4.2.4 `after_rollback`/`after_commit` depreciation warnings. @miks
+
 ## 0.4.2
 
 * Ruby new hash syntax and do not support Ruby 1.9.2 from now.

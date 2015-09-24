@@ -1,7 +1,7 @@
 # coding: utf-8
 Gem::Specification.new do |s|
   s.name = 'rails-settings-cached'
-  s.version = '0.4.2'
+  s.version = '0.4.5'
 
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
   s.authors = ['Squeegy', 'Georg Ledermann', '100hz', 'Jason Lee']
@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '>= 4.2.0'
 
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '>= 3.3.0'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'sqlite3', '>= 1.3.10'
