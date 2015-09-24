@@ -20,8 +20,10 @@ module RailsSettings
       end
 
       def [](var_name)
+        val = super(var_name)
+
         value = Rails.cache.fetch(cache_key(var_name, @object)) do
-          super(var_name)
+          val
         end
 
         if value.nil?

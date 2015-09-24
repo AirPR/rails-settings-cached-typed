@@ -74,7 +74,13 @@ module RailsSettings
 
       # get a setting value by [] notation
       def [](var_name)
-        object(var_name).try(:value) || @@defaults[var_name.to_s]
+        record = object(var_name)
+
+        if record.try(:thing) && !record.thing.rails_settings_mapping.has_key?(var_name.to_sym)
+          raise SettingNotFound, "Settings variable \"#{var_name}\" not declared in #{record.thing.class} model."
+        end
+
+        record.try(:value) || @@defaults[var_name.to_s]
       end
 
       # set a setting value by [] notation
@@ -83,8 +89,8 @@ module RailsSettings
 
         record = object(var_name) || thing_scoped.new(var: var_name)
 
-        if record.thing && !record.thing.rails_settings_mapping.has_key?(var_name.to_sym)
-          raise SettingNotFound, "Setting variable \"#{var_name}\" not declared in #{record.thing.class} model."
+        if record.try(:thing) && !record.thing.rails_settings_mapping.has_key?(var_name.to_sym)
+          raise SettingNotFound, "Settings variable \"#{var_name}\" not declared in #{record.thing.class} model."
         end
 
         record.value = value
