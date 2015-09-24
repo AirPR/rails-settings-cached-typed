@@ -6,7 +6,7 @@ require_relative '../lib/rails-settings/settings.rb'
 if RailsSettings::Settings.respond_to? :raise_in_transactional_callbacks=
   RailsSettings::Settings.raise_in_transactional_callbacks = true
 end
-require_relative '../lib/rails-settings-cached'
+require_relative '../lib/rails-settings-cached-typed'
 
 module Rails
   def self.cache
@@ -60,7 +60,7 @@ RSpec.configure do |config|
     end
 
     class User < ActiveRecord::Base
-      include RailsSettings::Extend
+      has_settings gender: :string
     end
 
     ActiveRecord::Base.connection.execute('delete from settings')
