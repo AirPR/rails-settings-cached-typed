@@ -33,6 +33,6 @@ describe RailsSettings::CachedSettings do
       expect(described_class["another_random_key"]).to be nil
       expect(described_class["another_random_key"]).to be nil
     end
-    expect(queries_count).to eq(2)
+    expect(queries_count).to eq(3)
   end
 end
