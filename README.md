@@ -149,7 +149,7 @@ user.settings.all
 # { "color" => :red }
 ```
 
-I you want to find users having or not having some settings, there are named scopes for this:
+If you want to find users having or not having some settings, there are named scopes for this:
 
 ```ruby
 User.with_settings
@@ -163,6 +163,15 @@ User.without_settings
 
 User.without_settings('color')
 # returns a scope of users having no 'color' setting (means user.settings.color == nil)
+```
+
+Settings maybe dynamically scoped. For example, if you're using [apartment gem](https://github.com/influitive/apartment) for multitenancy, you may not want tenants to share settings:
+
+```ruby
+class Settings < RailsSettings::CachedSettings
+  cache_prefix { Apartment::Tenant.current }
+  ...
+end
 ```
 
 -----
