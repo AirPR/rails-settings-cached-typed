@@ -18,7 +18,7 @@ module RailsSettings
       end
 
       def cache_key(var_name, scope_object)
-        scope = "rails_settings_cached:"
+        scope = "rails_settings_cached_typed:"
         scope << "#{@cache_prefix.call}:" if @cache_prefix
         scope << "#{scope_object.class.name}-#{scope_object.id}:" if scope_object
         scope << "#{var_name}"
@@ -38,6 +38,14 @@ module RailsSettings
           end
         else
           value
+        end
+      end
+
+      def []=(var_name, value)
+        val = super(var_name, value)
+        key = cache_key(var_name, @object)
+        if Rails.cache.exist?(key)
+          Rails.cache.write(key, val)
         end
       end
 
