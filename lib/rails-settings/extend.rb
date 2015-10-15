@@ -1,5 +1,9 @@
 module RailsSettings
   module Extend
+    def self.extended(obj)
+      obj.instance_exec { define_model_callbacks :setting_save }
+    end
+
     def has_settings(*list_of_settings)
       attrs = list_of_settings.first
 
@@ -45,11 +49,9 @@ module RailsSettings
                                  }
     end
 
-
     private
 
     module InstanceMethods
-
       def settings
         ScopedSettings.for_thing(self)
       end

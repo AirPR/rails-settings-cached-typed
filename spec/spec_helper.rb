@@ -68,6 +68,15 @@ RSpec.configure do |config|
                    level: :integer,
                    locked: :boolean,
                    last_logined_at: :object
+
+      before_setting_save :do_something
+      after_setting_save :do_something_else
+
+      def do_something
+      end
+
+      def do_something_else
+      end
     end
 
     ActiveRecord::Base.connection.execute('delete from settings')
