@@ -80,7 +80,7 @@ module RailsSettings
           raise SettingNotFound, "Settings variable \"#{var_name}\" not declared in #{record.thing.class} model."
         end
 
-        record.try(:value) || @@defaults[var_name.to_s]
+        record.try(:value) || record.try(:default_settings).try(:[], var_name) || @@defaults[var_name.to_s]
       end
 
       # set a setting value by [] notation

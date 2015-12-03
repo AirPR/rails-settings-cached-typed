@@ -67,7 +67,8 @@ RSpec.configure do |config|
       has_settings gender: :string,
                    level: :integer,
                    locked: :boolean,
-                   last_logined_at: :object
+                   last_logined_at: :object,
+                   has_email: {type: :boolean, default: false}
 
       before_setting_save :do_something
       after_setting_save :do_something_else
