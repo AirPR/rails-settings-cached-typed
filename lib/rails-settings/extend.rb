@@ -9,18 +9,33 @@ module RailsSettings
 
       raise ArgumentError.new('Expected a Hash') unless attrs.is_a?(Hash)
 
+      defaults = {}
+      filteredAttrs = {}
+
       attrs.each do |k, v|
+        if v.is_a?(Hash)
+          filteredAttrs[k] = v[:type]
+          defaults[k.to_sym] = v[:default]
+          v = v[:type]
+        else
+          filteredAttrs[k] = v
+        end
+
         if !%i(object string integer float boolean).member?(v.to_sym)
           raise ArgumentError.new("#{v}: not allowed as a type.")
         end
       end
 
       define_method :whitelisted_settings do
-        @whitelisted_settings ||= attrs.map{|k, v| k.to_sym}
+        @whitelisted_settings ||= filteredAttrs.map{|k, v| k.to_sym}
       end
 
       define_method :rails_settings_mapping do
-        @rails_settings_mapping ||= attrs
+        @rails_settings_mapping ||= filteredAttrs
+      end
+
+      define_method :default_settings do
+        @default_settings ||= defaults
       end
 
       include InstanceMethods
@@ -59,6 +74,7 @@ module RailsSettings
       def settings=(attr)
         return if attr.nil?
         raise ArgumentError.new('Expected a Hash') unless attr.is_a?(Hash)
+        #todo: Settings class not always defined..
         Settings.all.where(thing_type: self.class.to_s, thing_id: self.id).destroy_all
         update_settings(attr)
       end
@@ -69,6 +85,10 @@ module RailsSettings
           given_settings.slice!(*whitelisted_settings)
           given_settings.each do |k, v|
             type = rails_settings_mapping[k]
+
+            if type.is_a?(Hash)
+              type = type.fetch(:type, nil)
+            end
 
             self.settings[k] = case type
                                  when :float

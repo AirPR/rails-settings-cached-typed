@@ -123,6 +123,12 @@ describe RailsSettings do
       Setting.save_default(:test_save_default_key, '3211')
       expect(Setting.test_save_default_key).to eq '321'
     end
+
+    it 'can scope defaults to a model' do
+      expect(@user.settings.has_email).to eq(false)
+      @user.settings.has_email = true
+      expect(@user.settings.has_email).to eq(true)
+    end
   end
 
   describe 'Implementation by embeds a Model' do
