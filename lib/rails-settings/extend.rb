@@ -15,7 +15,7 @@ module RailsSettings
       attrs.each do |k, v|
         if v.is_a?(Hash)
           filteredAttrs[k] = v[:type]
-          defaults[k] = v[:default]
+          defaults[k.to_sym] = v[:default]
           v = v[:type]
         else
           filteredAttrs[k] = v

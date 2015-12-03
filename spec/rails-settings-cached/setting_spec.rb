@@ -125,9 +125,9 @@ describe RailsSettings do
     end
 
     it 'can scope defaults to a model' do
-      expect(@user.settings.has_email).to be_falsey
+      expect(@user.settings.has_email).to eq(false)
       @user.settings.has_email = true
-      expect(@user.settings.has_email).to be_truthy
+      expect(@user.settings.has_email).to eq(true)
     end
   end
 
