@@ -10,18 +10,26 @@ module RailsSettings
       raise ArgumentError.new('Expected a Hash') unless attrs.is_a?(Hash)
 
       defaults = {}
-      filteredAttrs = {}
 
+      # attrs is a hash containing what was passed in, which could be either
+      # {setting_field_name => setting_field_type} or
+      # {setting_field_name => {default: setting_default_value, type: setting_field_type} }
+      # whereas filteredAttrs is only
+      # {setting_field_name => setting_field_type}
+      filteredAttrs = {}
       attrs.each do |k, v|
+        type = nil
+
         if v.is_a?(Hash)
           filteredAttrs[k] = v[:type]
           defaults[k.to_sym] = v[:default]
-          v = v[:type]
+          type = v[:type]
         else
+          type = v
           filteredAttrs[k] = v
         end
 
-        if !%i(object string integer float boolean).member?(v.to_sym)
+        if !%i(object string integer float boolean).member?(type.to_sym)
           raise ArgumentError.new("#{v}: not allowed as a type.")
         end
       end
@@ -85,10 +93,6 @@ module RailsSettings
           given_settings.slice!(*whitelisted_settings)
           given_settings.each do |k, v|
             type = rails_settings_mapping[k]
-
-            if type.is_a?(Hash)
-              type = type.fetch(:type, nil)
-            end
 
             self.settings[k] = case type
                                  when :float
