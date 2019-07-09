@@ -11,7 +11,7 @@ module RailsSettings
 
       attrs.each do |k, v|
         v_type = v
-        if v.is_a? Hash && v.key?(:type)
+        if v.is_a?(Hash) && v.key?(:type)
           v_type = v[:key]
         end
         if !%i(object string integer float boolean).member?(v_type.to_sym)
