@@ -10,7 +10,11 @@ module RailsSettings
       raise ArgumentError.new('Expected a Hash') unless attrs.is_a?(Hash)
 
       attrs.each do |k, v|
-        if !%i(object string integer float boolean).member?(v.to_sym)
+        v_type = v
+        if v.is_a?(Hash) && v.key?(:type)
+          v_type = v[:type]
+        end
+        if !%i(object string integer float boolean).member?(v_type.to_sym)
           raise ArgumentError.new("#{v}: not allowed as a type.")
         end
       end
