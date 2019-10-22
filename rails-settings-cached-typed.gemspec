@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.summary = 'Carrying on from rails-settings-cached, this gem requires explicit type decelerations for settings.'
 
-  s.add_dependency 'rails', '>= 4.2.0'
+  s.add_dependency 'rails', '>= 5.0.0'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '>= 3.3.0'

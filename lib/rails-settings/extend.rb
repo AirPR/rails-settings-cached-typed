@@ -96,13 +96,13 @@ module RailsSettings
 
             self.settings[k] = case type
                                  when :float
-                                   ActiveRecord::Type::Float.new.type_cast_from_user(v)
+                                   ActiveRecord::Type::Float.new.cast(v)
                                  when :integer
-                                   ActiveRecord::Type::Integer.new.type_cast_from_user(v)
+                                   ActiveRecord::Type::Integer.new.cast(v)
                                  when :string
-                                   ActiveRecord::Type::String.new.type_cast_from_user(v)
+                                   ActiveRecord::Type::String.new.cast(v)
                                  when :boolean
-                                   ActiveRecord::Type::Boolean.new.type_cast_from_user(v)
+                                   ActiveRecord::Type::Boolean.new.cast(v)
                                  when :object
                                    v
                                end
